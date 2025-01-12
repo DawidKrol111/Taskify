@@ -1,0 +1,32 @@
+<configuration>
+    <!-- Definicja RollingFileAppender z rotacją opartą na czasie -->
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>app.log</file> <!-- Aktualny plik logu -->
+
+        <!-- Polityka rotacji logów oparta na czasie -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- Plik wzorcowy logów z datą -->
+            <fileNamePattern>app.%d{yyyy-MM-dd}.log</fileNamePattern>
+
+            <!-- Przechowywanie logów przez 3 dni -->
+            <maxHistory>3</maxHistory>
+        </rollingPolicy>
+
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Definicja appendera do konsoli -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Root logger -->
+    <root level="INFO">
+        <appender-ref ref="STDOUT"/> <!-- Odwołanie do appendera do konsoli -->
+        <appender-ref ref="FILE"/>   <!-- Odwołanie do RollingFileAppender -->
+    </root>
+</configuration>
